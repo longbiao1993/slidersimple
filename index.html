@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BeerSlider</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+    <link rel="stylesheet" href="BeerSlider.css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Six+Caps" rel="stylesheet">
+  <link rel="stylesheet" href="../demo-assets/prism/prism.css">
+  <link rel="stylesheet" href="../demo-assets/demo.css">  
+</head>
+<body>
+  <div class="fork-me"><a class="fork-me-link" href="https://github.com/pehaa/beerslider">Fork Me On GitHub</a></div>    
+  <div class="container">
+    <header>
+      <img src="../demo-assets/images/logos/beer_logo.svg" width="200" alt="">
+      <h1 class="heading-font">Beer Slider</h1>
+      <h2>Responsive &amp; Accessible Before-After Slider</h2>
+    </header>
+    <div id="slider" class="beer-slider" data-beer-label="before">
+      <img src="./images/pre_include_oce.d01.2083.png" alt="Original man holding beer">
+      <div class="beer-reveal" data-beer-label="after">
+        <img src="./images/pre_include_oce.d00gcm.2083.png" alt="Processed with logo and Lightroom presets">
+      </div>
+    </div>    
+    <section>
+      <h2 class="heading-font">What's Beer Plugin?</h2>
+      <p class="mb">Beer Slider is a lightweight vanilla JavaScript plugin.</p>     
+      <p>It's basic purpose is to compare two versions of an image, for example the same object shot in two different moments, a pre-edited photo and its processed version, a sketch and the finished illustration, etc.</p>
+      <p class="mb"> It can be particularly useful with photo presets (Lightroom presets, Photoshop actions, etc.).</p>
+      <p class="mb">Beer Slider is keyboard accessible - you can access it and reveal/hide the "after" state image with the keyboard.</p>
+    </section>
+  </div>
+  <section class="how mb">
+      <div class="container">
+    <section class="examples">
+      <h2 class="heading-font">Examples:</h2>
+      <div id="slider1" class="beer-slider" data-beer-label="original">
+        <img id="left-temp" src="./images/t2_include_oce.d01.2083.png" alt="Baltic seashore - unprocessed original photo">
+        <div class="beer-reveal" data-beer-label="sepicol">
+          <img  id="right-temp" src="./images/t2_include_oce.d00gcm.2083.png" alt="Baltic seashore - sepicol Lightroom preset by Altphotos.com">
+        </div>
+      </div>
+      <div class="buttonContainer">
+          <input class="button" type="button" value="Great Southeast Asia">
+          <input class="button" type="button" value="Southeast Asia">
+          <input class="button" type="button" value="Around Singapore">
+          <input class="button" type="button" value="Singapore">
+      </div>
+      <div id="slider2" class="beer-slider" data-beer-label="before">
+        <img  id="left-prep" src="./images/pre_include_oce.d01.2083.png" alt="Dogs playing in the sea - unprocessed original photo">
+        <div class="beer-reveal" data-beer-label="after">
+          <img  id="right-prep" src="./images/pre_include_oce.d00gcm.2083.png" alt="Dogs playing in the sea using Altphotos.com Lightroom presets">
+        </div>
+      </div>
+      <div class="buttonContainer">
+          <input class="button" type="button" value="Great Southeast Asia">
+          <input class="button" type="button" value="Southeast Asia">
+          <input class="button" type="button" value="Around Singapore">
+          <input class="button" type="button" value="Singapore">
+      </div>
+    </section> 
+  </div>
+  
+  <script>
+  // Instead of setting up 4 separate event handlers that all point to the
+  // same callback function, we can use event delegation where we handle the
+  // event on an ancestor object of all the elements we care about
+  
+  /*find all elements with an "buttonContainer" class:*/
+    x = document.getElementsByClassName("buttonContainer");
+    temp_button = x[0]
+    prep_button = x[1]
+    temp_button.addEventListener("click", temp);
+    prep_button.addEventListener("click", prep);
+  
+  
+  // Store all the images in an array
+  var prepleft_backgrounds = [
+  "./images/pre_include_oce.d01.2083.png",
+  "./images/presea.d02.2083.png",
+  "./images/pre.malai.d03.2083.png",
+  "./images/pre.sg.d04.2083.png"
+  
+  ];
+  var prepright_backgrounds = [
+  "./images/pre_include_oce.d00gcm.2083.png",
+  "./images/presea.d01.2083.png",
+  "./images/pre.malai.d02.2083.png",
+  "./images/pre.sg.d03.2083.png"
+  ];
+  var t2left_backgrounds = [
+  "./images/t2_include_oce.d01.2083.png",
+  "./images/t2sea.d02.2083.png",
+  "./images/t2.malai.d03.2083.png",
+  "./images/t2sg.d04.2083.png"
+  
+  ];
+  var t2right_backgrounds = [
+  "./images/t2_include_oce.d00gcm.2083.png",
+  "./images/t2sea.d01.2083.png",
+  "./images/t2.malai.d02.2083.png",
+  "./images/t2sg.d03.2083.png"
+  ];
+  // Get a reference to the output element
+  var left_temp = document.getElementById("left-temp");
+  var right_temp = document.getElementById("right-temp");
+  
+  // Get a reference to the output element
+  var left_prep = document.getElementById("left-prep");
+  var right_prep = document.getElementById("right-prep");
+  
+  // All event handling functions are automatically passed an argument
+  // that is a reference to the event object itself
+  function temp(event){
+  // Just set the background image based on the index of the button
+  // that got clicked within its parent and the corresponding index
+  // of the image in the array
+  
+  // Get all the <input> elements
+  var buttons = temp_button.querySelectorAll("input");
+  
+  
+  // Convert that node list into an array and get the index of the
+  // one that got clicked (event.target is the one that got clicked)
+  var index = (Array.prototype.slice.call(buttons)).indexOf(event.target);
+  
+  // Set the background to the right image from the array
+     left_temp.src = t2left_backgrounds[index]
+     right_temp.src = t2right_backgrounds[index]
+  }
+  
+  // All event handling functions are automatically passed an argument
+  // that is a reference to the event object itself
+  function prep(event){
+  // Just set the background image based on the index of the button
+  // that got clicked within its parent and the corresponding index
+  // of the image in the array
+  
+  // Get all the <input> elements
+  var buttons = prep_button.querySelectorAll("input");
+  
+  // Convert that node list into an array and get the index of the
+  // one that got clicked (event.target is the one that got clicked)
+  var index = (Array.prototype.slice.call(buttons)).indexOf(event.target);
+  
+  // Set the background to the right image from the array
+     left_prep.src = prepleft_backgrounds[index]
+     right_prep.src = prepright_backgrounds[index]
+  }
+  
+  </script>
+
+  <!-- library -->
+  <script src="BeerSlider.js"></script>
+  <!-- init -->
+  <script>
+    new BeerSlider( document.getElementById( "slider" ) );    
+    new BeerSlider( document.getElementById( "slider1" ), {start: 50} );
+    new BeerSlider( document.getElementById( "slider2" ), {start: 75} );
+
+  </script>
+  <script src="../demo-assets/prism/prism.js"></script>
+</body>
+</html>
